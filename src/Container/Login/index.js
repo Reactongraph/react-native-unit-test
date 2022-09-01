@@ -1,24 +1,23 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
 import {Container, Card, Item, Input, Button, Text} from 'native-base';
 import styles from './../Style';
 
-class LoginScreen extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: '',
-    };
-  }
-  handleChange = (e, name) => {
-    this.setState({
+const LoginScreen = () => {
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e, name) => {
+    setState({
+      ...state,
       [name]: e,
     });
   };
 
-  handleSubmit = () => {
-    const {email, password} = this.state;
+  const handleSubmit = () => {
+    const {email, password} = state;
     if (email !== '' && password !== '') {
       var data = JSON.stringify({
         email: email,
@@ -33,58 +32,60 @@ class LoginScreen extends Component {
         xhr.send(data);
         setTimeout(() => {
           if (xhr.status === 200 && xhr._response) {
-            this.handleChange('email', '');
-            this.handleChange('password', '');
+            handleChange('email', '');
+            handleChange('password', '');
             let name = JSON.parse(xhr._response).data.name;
             navigate('Welcome', {name});
           } else {
-            console.log('Something went wrong, please check server or internet connection')
+            console.log(
+              'Something went wrong, please check server or internet connection',
+            );
           }
         }, 500);
       } catch (error) {
-				console.log('error')
+        console.log('error');
       }
     } else {
-			console.log('Please enter email and password')
+      console.log('Please enter email and password');
     }
   };
 
-  render() {
-    return (
-      <Container className="login">
-        <View style={{flex: 9, justifyContent: 'center'}}>
-          <Card style={styles.card}>
-            <Item rounded style={styles.cardItem}>
-              <Input
-                testID="email"
-                name="email"
-                placeholder="Email"
-                onChangeText={e => this.handleChange(e, 'email')}
-              />
-            </Item>
-            <Item rounded style={styles.cardItem}>
-              <Input
-                testID="password"
-                name="password"
-                placeholder="Password"
-                secureTextEntry={true}
-                onChangeText={e => this.handleChange(e, 'password')}
-              />
-            </Item>
-            <Button
-              block
-              dark
-              style={styles.cardItem}
-              id="btn"
-              className="btn1"
-              onPress={() => this.handleSubmit()}>
-              <Text>Sign In</Text>
-            </Button>
-          </Card>
-        </View>
-      </Container>
-    );
-  }
-}
+  return (
+    <Container className="login">
+      <View style={{flex: 9, justifyContent: 'center'}}>
+        <Card style={styles.card}>
+          <Item rounded style={styles.cardItem}>
+            <Input
+              testID="email"
+              name="email"
+              value={state.email}
+              placeholder="Email"
+              onChangeText={e => handleChange(e, 'email')}
+            />
+          </Item>
+          <Item rounded style={styles.cardItem}>
+            <Input
+              testID="password"
+              name="password"
+              value={state.password}
+              placeholder="Password"
+              secureTextEntry={true}
+              onChangeText={e => handleChange(e, 'password')}
+            />
+          </Item>
+          <Button
+            block
+            dark
+            style={styles.cardItem}
+            id="btn"
+            className="btn1"
+            onPress={() => handleSubmit()}>
+            <Text>Sign In</Text>
+          </Button>
+        </Card>
+      </View>
+    </Container>
+  );
+};
 
 export default LoginScreen;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Toast } from 'native-base';
-import { Platform, ToastAndroid } from 'react-native';
+import {Toast} from 'native-base';
+import {Platform, ToastAndroid} from 'react-native';
 
-export default showToasterMessage = (message: string) => {
+export default (showToasterMessage = message => {
   if (Platform.OS === 'ios') {
     Toast.show({
       text: message,
@@ -10,4 +10,4 @@ export default showToasterMessage = (message: string) => {
   } else {
     ToastAndroid.show(message, ToastAndroid.LONG);
   }
-};
+});
