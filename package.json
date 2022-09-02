@@ -32,7 +32,7 @@
     "jest": "^24.9.0",
     "jest-environment-enzyme": "^7.1.2",
     "jest-enzyme": "^7.1.2",
-    "metro-react-native-babel-preset": "^0.57.0",
+    "metro-react-native-babel-preset": "^0.64.0",
     "react-dom": "^16.12.0",
     "react-test-renderer": "16.9.0"
   },
@@ -41,11 +41,10 @@
     "setupTestFrameworkScriptFile": "jest-enzyme",
     "testEnvironment": "enzyme",
     "testEnvironmentOptions": {
-        "enzymeAdapter": "react16"
+      "enzymeAdapter": "react16"
     },
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|react-native-firebase|react-native-google-signin|react-native-fbsdk|native-base|native-base-shoutem-theme|@shoutem/theme|@shoutem/animation|@shoutem/ui|tcomb-form-native)"
     ]
-    
   }
 }
